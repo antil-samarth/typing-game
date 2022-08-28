@@ -1,0 +1,27 @@
+body {
+    font-family:'Courier New', Courier, monospace;
+    background-color: #FFFFFF;
+    position: relative;
+    top: 10%;
+    text-align: center;
+}
+
+h1 {
+    color: #003b49;
+}
+
+p {
+    color: #003b49;
+    text-decoration: underline;
+    font-size: large;
+    font-weight: bold;
+}
+
+.highlight {
+    background-color: yellow;
+}
+
+.error {
+    background-color: lightcoral;
+    border: red;
+}
