@@ -43,7 +43,7 @@ document.getElementById('start').addEventListener('click', () => {
 });
 
 
-typedValueElement.addEventListener('input', () => {
+typedValueElement.addEventListener('input', function _listener() {
     const currentWord = words[wordIndex];
 
     const typedValue = typedValueElement.value;
@@ -54,6 +54,8 @@ typedValueElement.addEventListener('input', () => {
         const message = `Finished in ${elapsedTime / 1000} seconds.`;
 
         messageElement.innerText = message;
+
+        typedValueElement.removeEventListener('input', _listener );
     
     } else if (typedValue.endsWith = (' ') && typedValue.trim() === currentWord) { /** new word */
 
