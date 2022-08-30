@@ -47,7 +47,7 @@ typedValueElement.addEventListener('input', () => {
     const currentWord = words[wordIndex];
 
     const typedValue = typedValueElement.value;
-    if (typedValue === currentWord && wordIndex === words.length - 1 ) {
+    if (typedValue === currentWord && wordIndex === words.length - 1 ) { /* quote end */
 
         const elapsedTime = new Date().getTime() - startTime;
 
@@ -55,7 +55,7 @@ typedValueElement.addEventListener('input', () => {
 
         messageElement.innerText = message;
     
-    } else if (typedValue.endsWith = (' ') && typedValue.trim() === currentWord) {
+    } else if (typedValue.endsWith = (' ') && typedValue.trim() === currentWord) { /** new word */
 
         typedValueElement.value = '';
 
