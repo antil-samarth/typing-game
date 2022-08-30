@@ -8,15 +8,17 @@ const quotes = [
     'Education never ends, Watson. It is a series of lessons, with the greatest for the last.',
 ];
 
+localStorage.setItem('highscore', 0);
+
+let highScore = 0;
 let words =[];
 let wordIndex = 0;
 
 let startTime = Date.now();
-
 const quoteElement = document.getElementById('quote');
 const messageElement = document.getElementById('message');
 const typedValueElement = document.getElementById('typed-value');
-
+const highScoreElement = document.getElementById('highscore');
 
 
 document.getElementById('start').addEventListener('click', () => {
@@ -40,22 +42,36 @@ document.getElementById('start').addEventListener('click', () => {
     typedValueElement.focus();
 
     startTime = new Date().getTime();
+
+    typedValueElement.disabled = false;
 });
 
 
 typedValueElement.addEventListener('input', function _listener() {
     const currentWord = words[wordIndex];
-
     const typedValue = typedValueElement.value;
     if (typedValue === currentWord && wordIndex === words.length - 1 ) { /* quote end */
 
-        const elapsedTime = new Date().getTime() - startTime;
+        const elapsedTime = (new Date().getTime() - startTime) / 1000;
 
-        const message = `Finished in ${elapsedTime / 1000} seconds.`;
+        const message = `Finished in ${elapsedTime} seconds.`;
 
         messageElement.innerText = message;
 
-        typedValueElement.removeEventListener('input', _listener );
+        typedValueElement.removeEventListener('input', _listener, true);
+        typedValueElement.disabled = true;
+
+        if (highScore == 0 || highScore > elapsedTime) {
+            localStorage.setItem('highscore', elapsedTime);
+            highScore = elapsedTime;
+        }
+
+        const highScoreMessage = `Highscore => ${elapsedTime}`;
+        highScoreElement.innerText = highScoreMessage;
+
+        setTimeout(() => {
+                alert('Success!');
+            }, 10);
     
     } else if (typedValue.endsWith = (' ') && typedValue.trim() === currentWord) { /** new word */
 
@@ -76,4 +92,4 @@ typedValueElement.addEventListener('input', function _listener() {
         typedValueElement.className = 'error';
     
     }
-});
+}, true);
