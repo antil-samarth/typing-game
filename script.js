@@ -10,6 +10,7 @@ const quotes = [
 
 localStorage.setItem('highscore', 0);
 
+let startFlag = true;
 let highScore = 0;
 let words =[];
 let wordIndex = 0;
@@ -44,52 +45,56 @@ document.getElementById('start').addEventListener('click', () => {
     startTime = new Date().getTime();
 
     typedValueElement.disabled = false;
+    startFlag = true;
 });
 
 
-typedValueElement.addEventListener('input', function _listener() {
-    const currentWord = words[wordIndex];
-    const typedValue = typedValueElement.value;
-    if (typedValue === currentWord && wordIndex === words.length - 1 ) { /* quote end */
-
-        const elapsedTime = (new Date().getTime() - startTime) / 1000;
-
-        const message = `Finished in ${elapsedTime} seconds.`;
-
-        messageElement.innerText = message;
-
-        typedValueElement.removeEventListener('input', _listener, true);
-        typedValueElement.disabled = true;
-
-        if (highScore == 0 || highScore > elapsedTime) {
-            localStorage.setItem('highscore', elapsedTime);
-            highScore = elapsedTime;
-        }
-
-        const highScoreMessage = `Highscore => ${elapsedTime}`;
-        highScoreElement.innerText = highScoreMessage;
-
-        setTimeout(() => {
-                alert('Success!');
-            }, 10);
-    
-    } else if (typedValue.endsWith = (' ') && typedValue.trim() === currentWord) { /** new word */
-
-        typedValueElement.value = '';
-
-        wordIndex++;
-        
-        for (const wordElement of quoteElement.childNodes) {  
-            wordElement.className = '';
-        }
-
-        quoteElement.childNodes[wordIndex].className = 'highlight';
-
-    } else if ( currentWord.startsWith(typedValue) ) {
-        typedValueElement.className = '';
-    
-    } else {
-        typedValueElement.className = 'error';
-    
-    }
-}, true);
+if (startFlag) {
+	typedValueElement.addEventListener('input', function _listener() {
+	    const currentWord = words[wordIndex];
+	    const typedValue = typedValueElement.value;
+	    if (typedValue === currentWord && wordIndex === words.length - 1 ) { /* quote end */
+	
+	        const elapsedTime = (new Date().getTime() - startTime) / 1000;
+	
+	        const message = `Finished in ${elapsedTime} seconds.`;
+	
+	        messageElement.innerText = message;
+	
+	        typedValueElement.disabled = true;
+	
+	        if (highScore == 0 || highScore > elapsedTime) {
+	            localStorage.setItem('highscore', elapsedTime);
+	            highScore = elapsedTime;
+	        }
+	
+	        const highScoreMessage = `Highscore => ${elapsedTime}`;
+	        highScoreElement.innerText = highScoreMessage;
+	
+	        setTimeout(() => {
+	                alert('Success!');
+	            }, 10);
+            
+            startFlag = false;
+	    
+	    } else if (typedValue.endsWith = (' ') && typedValue.trim() === currentWord) { /** new word */
+	
+	        typedValueElement.value = '';
+	
+	        wordIndex++;
+	        
+	        for (const wordElement of quoteElement.childNodes) {  
+	            wordElement.className = '';
+	        }
+	
+	        quoteElement.childNodes[wordIndex].className = 'highlight';
+	
+	    } else if ( currentWord.startsWith(typedValue) ) {
+	        typedValueElement.className = '';
+	    
+	    } else {
+	        typedValueElement.className = 'error';
+	    
+	    }
+	}, true);
+}
