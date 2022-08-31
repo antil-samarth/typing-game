@@ -56,19 +56,21 @@ if (startFlag) {
 	    if (typedValue === currentWord && wordIndex === words.length - 1 ) { /* quote end */
 	
 	        const elapsedTime = (new Date().getTime() - startTime) / 1000;
+
+            const wpm = (words.length * 60) / elapsedTime;
 	
-	        const message = `Finished in ${elapsedTime} seconds.`;
+	        const message = `Finished in ${elapsedTime} seconds, with speed of ${wpm} words per minute.`;
 	
 	        messageElement.innerText = message;
 	
 	        typedValueElement.disabled = true;
 	
-	        if (highScore == 0 || highScore > elapsedTime) {
-	            localStorage.setItem('highscore', elapsedTime);
-	            highScore = elapsedTime;
+	        if (highScore < wpm) {
+	            localStorage.setItem('highscore', wpm);
+	            highScore = wpm;
 	        }
 	
-	        const highScoreMessage = `Highscore => ${elapsedTime}`;
+	        const highScoreMessage = `Highscore => ${wpm} wpm`;
 	        highScoreElement.innerText = highScoreMessage;
 	
 	        setTimeout(() => {
